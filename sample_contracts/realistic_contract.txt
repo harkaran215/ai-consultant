@@ -1,0 +1,23 @@
+SERVICE AGREEMENT
+
+This agreement is made between VendorX and CompanyY.
+
+Scope:
+VendorX agrees to provide services as described in various documents and communications.
+
+Payment:
+Invoices are generally due within 30 days. However, CompanyY reserves the right to delay payments if deliverables are not satisfactory.
+
+Liability:
+VendorX shall not be liable for any indirect damages.
+In no event shall liability exceed the fees paid.
+Notwithstanding the above, VendorX shall be fully liable for any data breaches or security incidents.
+
+Termination:
+Either party may terminate this agreement with prior notice. Notice period is not clearly defined.
+
+Confidentiality:
+Both parties agree to confidentiality obligations.
+
+Other:
+This agreement may be modified verbally or in writing.

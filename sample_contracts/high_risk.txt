@@ -1,0 +1,21 @@
+SERVICE AGREEMENT
+
+This Service Agreement is entered into between ABC Vendor and XYZ Company.
+
+Scope of Work:
+ABC Vendor will provide software development services as requested by XYZ Company.
+
+Payment Terms:
+Payment will be made upon completion of work. No detailed payment schedule is defined.
+
+Liability:
+The vendor shall have unlimited liability for any damages arising from the services provided.
+
+Termination:
+No termination clause is specified in this agreement.
+
+Confidentiality:
+Both parties agree to keep confidential information private.
+
+Governing Law:
+This agreement shall be governed by the laws of India.
