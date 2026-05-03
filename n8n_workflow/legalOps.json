@@ -1,0 +1,102 @@
+{
+  "name": "legalOps",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contract",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-224, 16],
+      "id": "d650a573-3caa-4203-afce-dc9dd9ade941",
+      "name": "Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "select": "channel",
+        "channelId": "REPLACE_WITH_CHANNEL_ID",
+        "message": "=*📄 Contract Review*\nVendor: {{$json[\"body\"][\"vendor\"]}}\nValue: {{$json[\"body\"][\"value\"]}}\nRisk: {{$json[\"body\"][\"risk_level\"]}}\n\n*Summary:*\n{{$json[\"body\"][\"summary\"]}}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [96, 16],
+      "id": "753afc25-749e-404c-be22-0e0be7d08362",
+      "name": "Send message and wait for response"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [416, 32],
+      "id": "59a3cfad-84bc-4414-92de-72b5d6ed11ec",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/approve-contract",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contract_id\": \"{{ $('Webhook').item.json.body.contract_id }}\",\n  \"status\": \"approved\"\n}"
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [816, -80],
+      "id": "96d971db-fbe7-4856-b6c7-acf8370cc29a",
+      "name": "HTTP Request (Approve)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/approve-contract",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contract_id\": \"{{ $('Webhook').item.json.body.contract_id }}\",\n  \"status\": \"rejected\"\n}"
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [816, 64],
+      "id": "d2ec51bd-42cb-4de7-9151-82859d7cba16",
+      "name": "HTTP Request (Reject)"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Send message and wait for response", "type": "main", "index": 0 }]]
+    },
+    "Send message and wait for response": {
+      "main": [[{ "node": "If", "type": "main", "index": 0 }]]
+    },
+    "If": {
+      "main": [
+        [{ "node": "HTTP Request (Approve)", "type": "main", "index": 0 }],
+        [{ "node": "HTTP Request (Reject)", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false
+}
