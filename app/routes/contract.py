@@ -54,13 +54,14 @@ async def upload_contract(
 
         # 4. Build record
         record = {
-            "contract_id": contract_id,
-            "vendor": vendor,
-            "value": value,
-            "risk_level": analysis.get("risk_level", "Unknown"),
-            "status": "pending",
-            "created_at": datetime.utcnow().isoformat()
-        }
+        "contract_id": contract_id,
+        "vendor": vendor,
+        "value": value,
+        "risk_level": analysis.get("risk_level", "Unknown"),
+        "summary": analysis.get("summary", ""),   # 🔥 ADD THIS LINE
+        "status": "pending",
+        "created_at": datetime.utcnow().isoformat()
+    }
 
         # 5. Hash (optional but good)
         record["record_hash"] = generate_hash(record)

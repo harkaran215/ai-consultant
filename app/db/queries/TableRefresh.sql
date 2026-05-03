@@ -7,12 +7,14 @@ WHERE contract_id = %(contract_id)s
   AND is_current = TRUE
   AND %(operation)s = 'update';
 
+
 -- Insert new row
 INSERT INTO contracts (
     contract_id,
     vendor,
     value,
     risk_level,
+    summary,        
     status,
     is_current,
     start_date
@@ -22,6 +24,7 @@ SELECT
     COALESCE(src.vendor, %(vendor)s),
     COALESCE(src.value, %(value)s),
     COALESCE(src.risk_level, %(risk_level)s),
+    COALESCE(src.summary, %(summary)s),   
     %(status)s,
     TRUE,
     NOW()

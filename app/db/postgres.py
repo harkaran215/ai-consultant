@@ -1,5 +1,9 @@
 import psycopg2
+from dotenv import load_dotenv
 import os
+
+
+load_dotenv() 
 
 def load_sql(file_path: str) -> str:
     with open(file_path, "r") as f:
@@ -27,10 +31,11 @@ def upsert_contract_scd2(record: dict, operation: str = "insert"):
             "vendor": record.get("vendor"),
             "value": record.get("value"),
             "risk_level": record.get("risk_level"),
+            "summary": record.get("summary"),
             "status": record.get("status", "pending"),
             "operation": operation
         }
-
+        print("RECORD:", record)
         cursor.execute(query, params)
         conn.commit()
 
